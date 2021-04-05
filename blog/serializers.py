@@ -9,3 +9,11 @@ class PostSerializers(serializers.ModelSerializer):
         # need list of all countries 
 
         fields =['cname']
+
+class CountrySpecific(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Post 
+        
+        fields = ['cname', 'alpha2Code', 'capital', 'population', 'timezone', 'flag', 'languages', 'borders']
