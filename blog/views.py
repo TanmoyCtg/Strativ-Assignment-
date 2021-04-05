@@ -3,24 +3,7 @@ from django.http import HttpResponse
 import requests
 # Create your views here.
 from .models import Post
-posts= [
-    {
-        "name":"Afghanistan",
-        "alpha2Code":"AF",
-        "timezones":["UTC+01:00"],
-        "borders":["MNE","GRC","MKD","KOS"],
-        "capital":"Kabul"
-    },
-    {
-        "name":"Albania",
-        "alpha2Code":"GE",
-        "timezones":["UTC+01:00"],
-        "borders":["MNE","GRC","MKD","KOS"],
-        "capital":"Kabul"
-        
-    }
-        
-]
+
 def home(request):
     url = 'https://restcountries.eu/rest/v2/all'
     response = requests.get(url)
@@ -29,18 +12,23 @@ def home(request):
 
         'data': data 
     }
+
     for d in data:
+
         name = d.get('name')
         alpha2Code = d.get('alpha2Code')
         capital = d.get('capital')
-        post = Post(cname=name, alpha2Code=alpha2Code, capital=capital)
+        population = d.get('population')
+        timezone = d.get('timezones')
+        flag = d.get('flag')
+        languages = d.get('languages')
+        borders = d.get('borders')
+
+        post = Post(cname=name, alpha2Code=alpha2Code, capital=capital, population=population, timezone=timezone, flag=flag, languages=languages, borders=borders)
         post.save()
+    
     return render(request, 'blog/data.html',context)
 
 
-def about(request):
-    context = {
-        'posts': posts
-    }
-    return render(request, 'blog/home.html', context )
+
         

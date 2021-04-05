@@ -5,10 +5,14 @@ class Post(models.Model):
 
     cname = models.CharField (max_length=255)
     alpha2Code = models.CharField(max_length=255)
-    # timezone = models.TextField()
     capital = models.CharField(max_length=255)
+    population = models.CharField(max_length=255)
+    timezone = models.TextField()
+    flag = models.URLField()
+    languages = models.TextField()
+    borders = models.TextField()
 
     def __str__(self):
-        return self.cname, self.alpha2Code, self.capital
-class Test(models.Model):
-    mydata = models.TextField()
+        return '%s %s %s %s %s %s %s %s' %(self.cname, self.alpha2Code, self.capital, self.population, self.timezone, self.flag, self.languages, self.borders)
+
+
