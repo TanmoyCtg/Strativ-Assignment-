@@ -1,0 +1,11 @@
+from rest_framework import serializers 
+from .models import Post
+
+class PostSerializers(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = Post
+        # need list of all countries 
+
+        fields =['cname']

@@ -2,7 +2,18 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 # Create your views here.
-from .models import Post
+from . models import Post
+from rest_framework.views import APIView
+from . serializers import PostSerializers
+from rest_framework.response import Response 
+
+class CountryList(APIView):
+
+    def get(self, request):
+        countrylist = Post.objects.all()
+        serializer = PostSerializers(countrylist, many = True)
+        return Response (serializer.data)
+
 
 def home(request):
     url = 'https://restcountries.eu/rest/v2/all'
