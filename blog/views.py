@@ -4,8 +4,10 @@ import requests
 # Create your views here.
 from . models import Post
 from rest_framework.views import APIView
-from . serializers import PostSerializers
+from . serializers import PostSerializers, CountrySpecific
 from rest_framework.response import Response 
+
+# this api returns list of all countries name
 
 class CountryList(APIView):
 
@@ -13,6 +15,17 @@ class CountryList(APIView):
         countrylist = Post.objects.all()
         serializer = PostSerializers(countrylist, many = True)
         return Response (serializer.data)
+
+# Details of an specific country
+
+class getCountry(APIView):
+
+    def get(self, request):
+
+        specific_country_list = Post.objects.get(pk=1)
+        serializer = CountrySpecific(specific_country_list)
+        return Response(serializer.data)
+
 
 
 def home(request):
