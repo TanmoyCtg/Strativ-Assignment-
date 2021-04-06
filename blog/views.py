@@ -6,6 +6,7 @@ from . models import Post
 from rest_framework.views import APIView
 from . serializers import PostSerializers, CountrySpecific
 from rest_framework.response import Response 
+from rest_framework import generics
 
 # this api returns list of all countries name
 
@@ -27,8 +28,17 @@ class getCountry(APIView):
         return Response(serializer.data)
 
 
+# creating a new country and added all information
+# new country Bangladesh
+class CreatingNewCountry(generics.ListCreateAPIView):
 
-def home(request):
+    queryset = Post.objects.all()
+    serializer_class = CountrySpecific
+
+
+
+
+def home(request): 
     url = 'https://restcountries.eu/rest/v2/all'
     response = requests.get(url)
     data = response.json()
