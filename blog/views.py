@@ -28,6 +28,7 @@ class getCountry(APIView):
         return Response(serializer.data)
 
 
+
 # creating a new country and added all information
 # new country Bangladesh
 class CreatingNewCountry(generics.ListCreateAPIView):
@@ -35,7 +36,14 @@ class CreatingNewCountry(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = CountrySpecific
 
+# update an existing country
+#  I updated the country Albania to ALBANIA
+# using this api also we can delete any country information
 
+class updateDeleteCountry(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Post.objects.all()
+    serializer_class = CountrySpecific
 
 
 def home(request): 
