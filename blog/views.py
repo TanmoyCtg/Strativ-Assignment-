@@ -4,9 +4,12 @@ import requests
 # Create your views here.
 from . models import Post
 from rest_framework.views import APIView
-from . serializers import PostSerializers, CountrySpecific
+from . serializers import PostSerializers, CountrySpecific, searchCountrySerializer
 from rest_framework.response import Response 
 from rest_framework import generics
+
+from django.db.models import Q
+from django.views.generic import ListView, TemplateView
 
 # this api returns list of all countries name
 
@@ -45,6 +48,21 @@ class updateDeleteCountry(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = CountrySpecific
 
+# class searchCountry(APIView):
+#     def get(self, request):
+
+#         queryset = Post.objects.raw("select id,cname from blog_post where cname")
+#         for i in queryset:
+#             print(i.cname)
+#         serializer = searchCountrySerializer(queryset)
+
+#         return Response(serializer.data)
+    
+    # def list(self, request):
+    #     queryset = self.get_queryset()
+    #     serializer = CountrySpecific(list(queryset), many=True)
+    #     return Response(serializer.data)
+
 
 def home(request): 
     url = 'https://restcountries.eu/rest/v2/all'
@@ -73,4 +91,26 @@ def home(request):
 
 
 
+
+# search country and see the details 
+class HomePageView(TemplateView):
+    template_name = 'blog/country.html'
+
+class SearchResultsView(ListView):
+
+    model = Post 
+    template_name = 'blog/searchform.html'
+
+    def get_queryset(self):
+
+        query = self.request.GET.get('q')
+        object_list = Post.objects.filter(Q(cname__icontains=query))
+
+        return object_list
         
+        
+ 
+
+
+    
+
