@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+
+{% block content%}
+
+
+<h1>Search Results</h1>
+
+<ul>
+  {% for i in object_list %}
+    <li>
+    
+    {{ i.cname}}
+    {{ i.borders}}
+    {{i.languages}}
+    </li>
+  {% endfor %}
+</ul>
+
+
+{%endblock content%}
