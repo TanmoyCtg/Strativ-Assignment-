@@ -10,5 +10,5 @@ urlpatterns = [
     path('country/update/<int:pk>/', views.updateDeleteCountry.as_view()),
     
     path('country/search/', views.SearchResultsView.as_view(), name='search'),
-    path('countrypage/', views.HomePageView.as_view(), name='home'),
+    path('countrypage/', views.HomePageView.as_view(), name='countrypage'),
 ]
