@@ -4,25 +4,34 @@ import requests
 # Create your views here.
 from . models import Post
 from rest_framework.views import APIView
-from . serializers import PostSerializers, CountrySpecific, searchCountrySerializer
+from . serializers import PostSerializers, CountrySpecific
 from rest_framework.response import Response 
 from rest_framework import generics
-
+from rest_framework import permissions
 from django.db.models import Q
 from django.views.generic import ListView, TemplateView
+from rest_framework.permissions import IsAuthenticated
 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 # this api returns list of all countries name
 
 class CountryList(APIView):
 
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]   
+
     def get(self, request):
         countrylist = Post.objects.all()
         serializer = PostSerializers(countrylist, many = True)
+        
         return Response (serializer.data)
 
 # Details of an specific country
 
 class getCountry(APIView):
+
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
 
@@ -36,6 +45,9 @@ class getCountry(APIView):
 # new country Bangladesh
 class CreatingNewCountry(generics.ListCreateAPIView):
 
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
     queryset = Post.objects.all()
     serializer_class = CountrySpecific
 
@@ -44,6 +56,9 @@ class CreatingNewCountry(generics.ListCreateAPIView):
 # using this api also we can delete any country information
 
 class updateDeleteCountry(generics.RetrieveUpdateDestroyAPIView):
+
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     queryset = Post.objects.all()
     serializer_class = CountrySpecific
